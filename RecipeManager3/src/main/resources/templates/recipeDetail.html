@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>レシピ詳細</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <h1 th:text="${recipe.title}">レシピタイトル</h1>
+    <p><strong>カテゴリID:</strong> <span th:text="${recipe.categoryId}"></span></p>
+    <p><strong>説明:</strong></p>
+    <p th:text="${recipe.description}"></p>
+    <a th:href="@{/}">戻る</a>
+</body>
+</html>

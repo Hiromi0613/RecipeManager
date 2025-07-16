@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>レシピ編集</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <h1>レシピ編集</h1>
+
+    <form th:action="@{'/edit/' + ${recipe.id}}" method="post" th:object="${recipe}">
+        <label for="title">タイトル</label>
+        <input type="text" id="title" th:field="*{title}" required />
+        <br/>
+
+        <label for="description">説明</label>
+        <textarea id="description" th:field="*{description}" rows="5" cols="40"></textarea>
+        <br/>
+
+        <label for="category">カテゴリ</label>
+        <select id="category" th:field="*{categoryId}">
+            <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"></option>
+        </select>
+        <br/>
+
+        <button type="submit">更新</button>
+    </form>
+
+    <p><a th:href="@{/myrecipes}">← マイレシピに戻る</a></p>
+</body>
+</html>

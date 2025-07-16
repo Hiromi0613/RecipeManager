@@ -1,0 +1,18 @@
+ <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ホーム</title>
+</head>
+<body>
+    <h1>ようこそ、<span th:text="${loginUser.username}">ユーザー名</span> さん！</h1>
+
+    <ul>
+        <li><a th:href="@{/registerRecipe}">レシピ登録</a></li>
+        <li><a th:href="@{/search}">レシピ検索</a></li>
+        <li><a th:href="@{/category}">カテゴリ一覧</a></li>
+        <li><a th:href="@{/myrecipes}">マイレシピ一覧</a></li> <!-- ← 修正ここ -->
+        <li><a th:href="@{/logout}">ログアウト</a></li>
+    </ul>
+</body>
+</html>

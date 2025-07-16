@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>マイレシピ一覧</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <h1>あなたのレシピ一覧</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>タイトル</th>
+                <th>説明</th>
+                <th>詳細</th>
+                <th>編集</th>
+                <th>削除</th> <!-- ← 追加 -->
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="recipe : ${recipes}">
+                <td th:text="${recipe.title}">タイトル</td>
+                <td th:text="${recipe.description}">説明</td>
+                <td><a th:href="@{'/recipe/' + ${recipe.id}}">詳細</a></td>
+                <td><a th:href="@{'/edit/' + ${recipe.id}}">編集</a></td>
+                <td>
+                    <a th:href="@{'/delete/' + ${recipe.id}}"
+                       onclick="return confirm('本当に削除しますか？');">削除</a> <!-- ← 追加 -->
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

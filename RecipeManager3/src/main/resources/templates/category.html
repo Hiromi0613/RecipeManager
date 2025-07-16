@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>カテゴリ一覧</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <h1>カテゴリ一覧</h1>
+
+    <ul>
+        <li th:each="cat : ${categories}">
+            <a th:href="@{'/category/' + ${cat.id}}" th:text="${cat.name}">カテゴリ名</a>
+        </li>
+    </ul>
+
+    <p><a th:href="@{/home}">← ホームへ戻る</a></p>
+</body>
+</html>
