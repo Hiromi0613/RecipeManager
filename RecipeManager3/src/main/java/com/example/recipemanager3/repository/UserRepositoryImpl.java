@@ -24,14 +24,14 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void save(User user) {
-        jdbcTemplate.update("INSERT INTO user (username, email, password, created_at, updated_at) VALUES (?, ?, ?, NOW(), NOW())",
+        jdbcTemplate.update("INSERT INTO users (username, email, password, created_at, updated_at) VALUES (?, ?, ?, NOW(), NOW())",
                 user.getUsername(), user.getEmail(), user.getPassword());
     }
 
     @Override
     public User findByEmailAndPassword(String email, String password) {
         List<User> users = jdbcTemplate.query(
-            "SELECT * FROM user WHERE email = ? AND password = ?",
+            "SELECT * FROM users WHERE email = ? AND password = ?",
             new UserRowMapper(),
             email, password
         );
