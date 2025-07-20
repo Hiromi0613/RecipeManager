@@ -19,7 +19,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public List<User> findAll() {
-        return jdbcTemplate.query("SELECT * FROM user", new UserRowMapper());
+        return jdbcTemplate.query("SELECT * FROM users", new UserRowMapper());
     }
 
     @Override
@@ -41,7 +41,7 @@ public class UserRepositoryImpl implements UserRepository {
     
     @Override
     public Optional<User> findByEmail(String email) {
-        String sql = "SELECT * FROM user WHERE email = ?";
+        String sql = "SELECT * FROM users WHERE email = ?";
         List<User> users = jdbcTemplate.query(sql, new UserRowMapper(), email);
         if (users.isEmpty()) {
             return Optional.empty();
