@@ -1,5 +1,7 @@
 package com.example.recipemanager3.controller;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,5 +42,31 @@ public class AuthController {
     public String logout(HttpSession session) {
         session.invalidate();
         return "redirect:/login";
+    }
+    
+    // ✅ アカウント登録画面の表示
+    @GetMapping("/registerAccount")
+    public String showRegisterAccountForm(Model model) {
+        model.addAttribute("user", new User());
+        return "registerAccount";
+    }
+
+    // ✅ アカウント登録処理
+    @PostMapping("/register")
+    public String register(@ModelAttribute User user, Model model) {
+        Optional<User> existingUser = userRepository.findByEmail(user.getEmail());
+        if (existingUser.isPresent()) {
+            model.addAttribute("error", "このメールアドレスは既に使用されています");
+            return "registerAccount";
+        }
+
+        userRepository.save(user);  // 必要に応じて password をハッシュ化
+        return "redirect:/registerSuccess"; // ★ 登録完了ページへ遷移
+    }
+
+    // ✅ 登録完了画面の表示
+    @GetMapping("/registerSuccess")
+    public String showRegisterSuccessPage() {
+        return "registerSuccess";
     }
 }
