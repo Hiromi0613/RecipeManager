@@ -6,7 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.example.recipemanager3.entity.Recipe;
+import com.example.recipemanager3.entity.Category;
 import com.example.recipemanager3.repository.RecipeRepository;
+import com.example.recipemanager3.repository.CategoryRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -15,14 +17,20 @@ import lombok.RequiredArgsConstructor;
 public class RecipeDetailController {
 
     private final RecipeRepository recipeRepository;
+    private final CategoryRepository categoryRepository; // ✅ 追加
 
     @GetMapping("/recipe/{id}")
     public String showDetail(@PathVariable int id, Model model) {
         Recipe recipe = recipeRepository.findById(id);
         if (recipe == null) {
-            return "redirect:/"; // 見つからない場合はトップへ
+            return "redirect:/";
         }
+
+        Category category = categoryRepository.findById(recipe.getCategoryId());
+        String categoryName = (category != null) ? category.getName() : "未設定";
         model.addAttribute("recipe", recipe);
-        return "recipeDetail"; // → templates/recipeDetail.html
+        model.addAttribute("categoryName", categoryName);
+
+        return "recipeDetail";
     }
 }

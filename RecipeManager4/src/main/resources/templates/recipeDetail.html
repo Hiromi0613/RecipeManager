@@ -10,8 +10,9 @@
     <h1 th:text="${recipe.title}">レシピタイトル</h1>
 
     <p><strong>カテゴリ:</strong>
-        <span th:text="${recipe.categoryId}">カテゴリID</span>
-    </p>
+    	<span th:text="${categoryName}">カテゴリ名</span>
+	</p>
+    
 
     <p><strong>説明:</strong></p>
     <p th:text="${recipe.description}">レシピの説明が入ります。</p>
