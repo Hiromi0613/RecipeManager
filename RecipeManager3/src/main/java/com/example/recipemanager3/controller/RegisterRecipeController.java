@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +16,6 @@ import com.example.recipemanager3.repository.CategoryRepository;
 import com.example.recipemanager3.repository.RecipeRepository;
 
 import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -40,25 +38,20 @@ public class RegisterRecipeController {
     }
 
     @PostMapping("/registerRecipe")
-    public String registerRecipe(
-            @ModelAttribute("recipe") @Valid Recipe recipe,
-            BindingResult bindingResult,
-            HttpSession session,
-            Model model) {
+    public String registerRecipe(@ModelAttribute Recipe recipe,
+                                 HttpSession session) {
 
-        if (session.getAttribute("loginUser") == null) {
+        User loginUser = (User) session.getAttribute("loginUser");
+
+        if (loginUser == null) {
             return "redirect:/login";
         }
 
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("categories", categoryRepository.findAll());
-            return "registerRecipe"; // ← 入力エラー時に戻すテンプレート
-        }
+        recipe.setUserId(loginUser.getId());  // ← 追加！
 
-        User loginUser = (User) session.getAttribute("loginUser");
-        recipe.setUserId(loginUser.getId());
         recipeRepository.save(recipe);
-        return "redirect:/registerComplete";
+
+        return "redirect:/registerComplete"; // ← 登録完了画面へ
     }
     
     @GetMapping("/registerComplete")
