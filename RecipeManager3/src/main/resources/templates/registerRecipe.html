@@ -8,10 +8,18 @@
 <body>
 <div class="container">
     <h1>レシピ登録</h1>
+    
+    <!-- エラーがあれば表示 -->
+    <div th:if="${#fields.hasErrors('*')}" class="error-box">
+        <ul>
+            <li th:each="err : ${#fields.errors('*')}" th:text="${err}">エラーメッセージ</li>
+        </ul>
+    </div>
 
     <form th:action="@{/registerRecipe}" th:object="${recipe}" method="post">
         <label for="title">タイトル:</label>
-        <input type="text" th:field="*{title}" required />
+        <input type="text" th:field="*{title}" required maxlength="20" />
+        <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="error-message"></div>
 
         <label for="description">説明:</label>
         <textarea th:field="*{description}" rows="4"></textarea>
