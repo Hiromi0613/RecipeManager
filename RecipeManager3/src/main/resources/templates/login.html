@@ -7,6 +7,8 @@
 </head>
 <body>
 <div class="container">
+	<img th:src="@{/images/login-banner.png}" alt="ログインバナー" style="width: 100%; max-width: 600px; display: block; margin: 0 auto;"/>
+
     <h1>ログイン</h1>
 
     <form th:action="@{/login}" method="post" th:object="${user}" class="form-box">
